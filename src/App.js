@@ -1,5 +1,5 @@
 import "./App.css";
-import CurrencyForm from "./CurrencyForm";
+import CurrencyForm from "./components/CurrencyForm";
 
 function App() {
   return (
