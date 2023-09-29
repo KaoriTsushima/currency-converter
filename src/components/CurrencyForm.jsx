@@ -26,7 +26,7 @@ export default function CurrencyForm() {
 
         <FontAwesomeIcon icon={faDownLong} size="3x" />
 
-        <div className="row justify-content-center align-items-center mt-3">
+        <div className="row justify-content-center align-items-center mt-3 mb-5">
           <div className="col-lg-4 text-left pl-4 border">
             <p>{from * ratio}</p>
           </div>
