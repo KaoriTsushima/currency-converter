@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import { currencyList } from "./currencyList.js";
 
-export default function CurrencyOptions() {
-  const [selectedCurrency, setCurrency] = useState(null);
+export default function CurrencyOptions({ currencies }) {
+  const [selectedCurrency, setCurrency] = useState("");
   return (
     <div className="col-lg-3">
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-        <option selected disabled>
-          Currency
-        </option>
-        {currencyList.map((currency) => (
-          <option
-            value={selectedCurrency}
-            onChange={(e) => setCurrency(e.target.value)}
-          >
+      <select
+        value={selectedCurrency}
+        className="custom-select mr-sm-2"
+        id="inlineFormCustomSelect"
+        onChange={(e) => setCurrency(e.target.value)}
+      >
+        {Object.keys(currencies).map((currency) => (
+          <option key={currency} value={currency}>
             {currency}
           </option>
         ))}
