@@ -12,6 +12,11 @@ export default function CurrencyForm() {
   const ratio = 1.5;
   const [from, setFrom] = useState(0);
   const [currencies, setCurrencies] = useState([]);
+  const [result, setResult] = useState(null);
+
+  async function startCalculate() {
+    setResult(from * ratio);
+  }
 
   useEffect(() => {
     async function getCurrencies() {
@@ -57,17 +62,21 @@ export default function CurrencyForm() {
             <p>{from * ratio}</p>
           </div> */}
           <CurrencyOptions currencies={currencies} />
-          <Button variant="primary">Calculate</Button>
+          <Button variant="primary" onClick={startCalculate}>
+            Calculate
+          </Button>
         </div>
       </form>
+      {result !== null ? (
+        <div className="result">
+          <p>You will have {result} GBP</p>
+          <p>Rate: {ratio}</p>
+          <p>
+            <Timestamp date={Date()} />
+          </p>
+        </div>
+      ) : null}
       {/* const url ="https://api.freecurrencyapi.com/v1/latest?apikey=YOUR-APIKEY" */}
-      <div className="result">
-        <p>You will have {from * ratio} GBP</p>
-        <p>Rate: {ratio}</p>
-        <p>
-          <Timestamp date={Date()} />
-        </p>
-      </div>
     </div>
   );
 }
