@@ -76,7 +76,6 @@ export default function CurrencyForm() {
           </p>
         </div>
       ) : null}
-      {/* const url ="https://api.freecurrencyapi.com/v1/latest?apikey=YOUR-APIKEY" */}
     </div>
   );
 }
