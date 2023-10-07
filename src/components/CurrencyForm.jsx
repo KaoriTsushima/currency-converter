@@ -9,13 +9,34 @@ import Button from "react-bootstrap/Button";
 import Timestamp from "react-timestamp";
 
 export default function CurrencyForm() {
-  const ratio = 1.5;
   const [from, setFrom] = useState(0);
   const [currencies, setCurrencies] = useState([]);
   const [result, setResult] = useState(null);
+  const [fromCurrency, setFromCurrency] = useState("");
+  const [toCurrency, setToCurrency] = useState("");
+  const [ratio, setRatio] = useState(1);
+  const [error, setError] = useState(false);
 
   async function startCalculate() {
-    setResult(from * ratio);
+    setError(false);
+    if (!fromCurrency || !toCurrency || from <= 0) {
+      setError(true);
+      return;
+    }
+
+    const result = await axios.get(
+      "https://api.freecurrencyapi.com/v1/latest",
+      {
+        params: {
+          apikey: process.env.REACT_APP_CURRENCY_API_KEY,
+          base_currency: fromCurrency,
+          currencies: toCurrency,
+        },
+      }
+    );
+    const ratioFromApi = result.data.data[toCurrency];
+    setRatio(ratioFromApi);
+    setResult(from * ratioFromApi);
   }
 
   useEffect(() => {
@@ -52,7 +73,11 @@ export default function CurrencyForm() {
               onChange={(e) => setFrom(e.target.value)}
             />
           </div>
-          <CurrencyOptions currencies={currencies} />
+          <CurrencyOptions
+            selectedCurrency={fromCurrency}
+            setSelectedCurrency={setFromCurrency}
+            currencies={currencies}
+          />
         </div>
 
         <FontAwesomeIcon icon={faDownLong} size="3x" />
@@ -61,15 +86,27 @@ export default function CurrencyForm() {
           {/* <div className="col-lg-4 text-left pl-4 border">
             <p>{from * ratio}</p>
           </div> */}
-          <CurrencyOptions currencies={currencies} />
+          <CurrencyOptions
+            selectedCurrency={toCurrency}
+            setSelectedCurrency={setToCurrency}
+            currencies={currencies}
+          />
           <Button variant="primary" onClick={startCalculate}>
             Calculate
           </Button>
         </div>
       </form>
+
+      {error ? (
+        <div className="error-message">
+          <p>Please fill Value and Currencies</p>
+        </div>
+      ) : null}
       {result !== null ? (
         <div className="result">
-          <p>You will have {result} GBP</p>
+          <p>
+            You will have {result} {toCurrency}
+          </p>
           <p>Rate: {ratio}</p>
           <p>
             <Timestamp date={Date()} />

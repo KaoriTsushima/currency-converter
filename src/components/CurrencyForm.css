@@ -6,3 +6,19 @@
 .result p {
   font-size: 18pt;
 }
+.error-message {
+  color: red;
+  font-size: 16pt;
+  font-weight: bold;
+  padding: 20px 0;
+  background-color: rgba(251, 160, 160, 0.6);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error-message p {
+  margin: 0 !important;
+}
