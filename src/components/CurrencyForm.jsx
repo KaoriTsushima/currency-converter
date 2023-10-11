@@ -35,8 +35,8 @@ export default function CurrencyForm() {
       }
     );
     const ratioFromApi = result.data.data[toCurrency];
-    setRatio(ratioFromApi);
-    setResult(from * ratioFromApi);
+    setRatio(ratioFromApi.toFixed(2));
+    setResult(from * ratioFromApi.toFixed(2));
   }
 
   useEffect(() => {
@@ -105,7 +105,10 @@ export default function CurrencyForm() {
       {result !== null ? (
         <div className="result">
           <p>
-            You will have {result} {toCurrency}
+            You will have{" "}
+            <strong>
+              {result} {toCurrency}
+            </strong>
           </p>
           <p>Rate: {ratio}</p>
           <p>
